@@ -15,10 +15,6 @@ import javax.sql.DataSource
 
 @Controller
 class UserController {
-
-    @Value("\${spring.datasource.url}")
-    private var dbUrl: String? = null
-
     @Autowired
     lateinit private var dataSource: DataSource
 
@@ -78,17 +74,5 @@ class UserController {
             return "error"
         }
 
-    }
-
-    @Bean
-    @Throws(SQLException::class)
-    fun dataSource(): DataSource {
-        if (dbUrl?.isEmpty() ?: true) {
-            return HikariDataSource()
-        } else {
-            val config = HikariConfig()
-            config.jdbcUrl = dbUrl
-            return HikariDataSource(config)
-        }
     }
 }
