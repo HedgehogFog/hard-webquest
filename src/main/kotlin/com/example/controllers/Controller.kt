@@ -17,8 +17,8 @@ import javax.sql.DataSource
 @Controller
 class Controller {
 
-
-
+    @Value("\${spring.datasource.url}")
+    private var dbUrl: String? = null
 
 
 
@@ -29,7 +29,10 @@ class Controller {
 
     @RequestMapping("/db")
     internal fun db(model: MutableMap<String, Any>): String {
-        val connection = dataSource.getConnection()
+        val config = HikariConfig()
+        config.jdbcUrl = dbUrl
+        val connection = HikariDataSource(config).connection
+
         try {
             val stmt = connection.createStatement()
             stmt.executeUpdate("CREATE TABLE IF NOT EXISTS ticks (tick timestamp)")
