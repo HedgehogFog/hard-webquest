@@ -1,5 +1,6 @@
 package com.example
 
+import com.example.DataSourceGen.dataSource
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import org.springframework.beans.factory.annotation.Autowired
@@ -18,32 +19,32 @@ class UserController {
 
     @RequestMapping("/userList")
     internal fun userList(model: MutableMap<String, Any>): String {
-//        val connection = dataSource.getConnection()
+        val connection = dataSource.getConnection()
         try {
-//            val stmt = connection.createStatement()
+            val stmt = connection.createStatement()
 //            stmt.executeUpdate("CREATE TABLE IF NOT EXISTS users (tick timestamp)")
 //            stmt.executeUpdate("INSERT INTO ticks VALUES (now())")
-//            val rs = stmt.executeQuery("SELECT * FROM users")
+            val rs = stmt.executeQuery("SELECT * FROM users")
 
             val output = ArrayList<String>()
-//            while (rs.next()) {
-//                val id = rs.getInt("id")
-//                val username = rs.getString("username")
-//                val password = rs.getString("password").hashCode()
-//                val roleId = rs.getInt("role")
+            while (rs.next()) {
+                val id = rs.getInt("id")
+                val username = rs.getString("username")
+                val password = rs.getString("password").hashCode()
+                val roleId = rs.getInt("role")
 
-//                var role = if (roleId != 232)
+                var role = if (roleId != 232)
                     "Simple Deadly"
-//                else
+                else
                     "ADMIN"
 
-//                output.add("ID: $id, username: $username, password: $password, role: $role")
-//            }
+                output.add("ID: $id, username: $username, password: $password, role: $role")
+            }
 
             model.put("users", output)
             return "userList"
         } catch (e: Exception) {
-//            connection.close()
+            connection.close()
             model.put("message", e.message ?: "Unknown error")
             return "error"
         }
@@ -52,10 +53,10 @@ class UserController {
 
     @RequestMapping("/userAdmin")
     internal fun userAdmin(model: MutableMap<String, Any>): String {
-//        val connection = dataSource.getConnection()
+        val connection = dataSource.getConnection()
         try {
-//            val stmt = connection.createStatement()
-//            stmt.executeUpdate("INSERT INTO users VALUES (\"admin\", \"admin\", 232)")
+            val stmt = connection.createStatement()
+            stmt.executeUpdate("INSERT INTO users VALUES (\"admin\", \"admin\", 232)")
 
 //            val rs = stmt.executeQuery("SELECT users FROM ticks")
 //
@@ -67,12 +68,10 @@ class UserController {
 //            model.put("records", output)
             return "userList"
         } catch (e: Exception) {
-//            connection.close()
+            connection.close()
             model.put("message", e.message ?: "Unknown error")
             return "error"
         }
 
     }
-
-
 }

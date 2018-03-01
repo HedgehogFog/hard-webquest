@@ -1,5 +1,6 @@
 package com.example
 
+import com.example.DataSourceGen.dataSource
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import org.springframework.beans.factory.annotation.Autowired
@@ -16,11 +17,9 @@ import javax.sql.DataSource
 @Controller
 class Controller {
 
-    @Value("\${spring.datasource.url}")
-    private var dbUrl: String? = null
 
-    @Autowired
-    protected lateinit var dataSource: DataSource
+
+
 
 
     @RequestMapping("/")
@@ -52,15 +51,5 @@ class Controller {
 
     }
 
-    @Bean
-    @Throws(SQLException::class)
-    fun dataSource(): DataSource {
-        if (dbUrl?.isEmpty() ?: true) {
-            return HikariDataSource()
-        } else {
-            val config = HikariConfig()
-            config.jdbcUrl = dbUrl
-            return HikariDataSource(config)
-        }
-    }
+
 }
