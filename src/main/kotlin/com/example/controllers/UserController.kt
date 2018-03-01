@@ -23,7 +23,14 @@ class UserController {
 
     @RequestMapping("/userList")
     internal fun userList(model: MutableMap<String, Any>): String {
-        val connection = dataSource.getConnection()
+        lateinit var connection: Connection
+        if (dbUrl?.isEmpty() != false){
+            val config = HikariConfig()
+            config.jdbcUrl = dbUrl
+            connection = HikariDataSource(config).connection
+        } else {
+            connection = HikariDataSource().connection
+        }
         try {
             val stmt = connection.createStatement()
 //            stmt.executeUpdate("CREATE TABLE IF NOT EXISTS users (tick timestamp)")
