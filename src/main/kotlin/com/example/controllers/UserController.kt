@@ -1,6 +1,5 @@
 package com.example
 
-import com.example.Controller.Companion.dataSource
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import org.springframework.beans.factory.annotation.Autowired
@@ -15,7 +14,7 @@ import java.util.*
 import javax.sql.DataSource
 
 @Controller
-class UserController {
+class UserController : com.example.Controller() {
 
     @RequestMapping("/userList")
     internal fun userList(model: MutableMap<String, Any>): String {

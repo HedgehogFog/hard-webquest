@@ -14,15 +14,13 @@ import java.util.*
 import javax.sql.DataSource
 
 @Controller
-class Controller {
+open class Controller {
 
     @Value("\${spring.datasource.url}")
     private var dbUrl: String? = null
 
-    companion object {
-        @Autowired
-        lateinit var dataSource: DataSource
-    }
+    @Autowired
+    protected lateinit var dataSource: DataSource
 
 
     @RequestMapping("/")
