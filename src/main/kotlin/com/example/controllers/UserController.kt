@@ -15,6 +15,7 @@ import javax.sql.DataSource
 
 @Controller
 class UserController {
+
     @Autowired
     lateinit private var dataSource: DataSource
 
