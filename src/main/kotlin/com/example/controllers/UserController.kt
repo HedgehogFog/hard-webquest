@@ -45,7 +45,7 @@ class UserController {
             return "userList"
         } catch (e: Exception) {
             connection.close()
-            model.put("message", e.message ?: "Unknown error")
+            model.put("message", "USER_LIST ERROR: " + e.message)
             return "error"
         }
 
@@ -53,7 +53,7 @@ class UserController {
 
     @RequestMapping("/userAdmin")
     internal fun userAdmin(model: MutableMap<String, Any>): String {
-        val connection = dataSource.getConnection()
+        val connection = HikariDataSource().connection
         try {
             val stmt = connection.createStatement()
             stmt.executeUpdate("INSERT INTO users VALUES (\"admin\", \"admin\", 232)")
@@ -69,7 +69,7 @@ class UserController {
             return "userList"
         } catch (e: Exception) {
             connection.close()
-            model.put("message", e.message ?: "Unknown error")
+            model.put("message", "USER_ADMIN ERROR: " + e.message)
             return "error"
         }
 
