@@ -19,8 +19,11 @@ class Controller {
     @Value("\${spring.datasource.url}")
     private var dbUrl: String? = null
 
-    @Autowired
-    lateinit private var dataSource: DataSource
+    companion object {
+        @Autowired
+        lateinit var dataSource: DataSource
+    }
+
 
     @RequestMapping("/")
     internal fun index(): String {
