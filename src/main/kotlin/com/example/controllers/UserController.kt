@@ -62,7 +62,7 @@ class UserController {
         val connection = HikariDataSource(config).connection
         try {
             val stmt = connection.createStatement()
-            stmt.executeUpdate("INSERT INTO users VALUES (\"admin\", \"admin\", 232)")
+            stmt.executeUpdate("INSERT INTO users (username, password, role) VALUES (\"admin\", \"admin\", 232)")
 
 //            val rs = stmt.executeQuery("SELECT users FROM ticks")
 //
