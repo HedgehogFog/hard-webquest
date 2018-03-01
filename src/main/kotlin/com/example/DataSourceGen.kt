@@ -12,14 +12,14 @@ object DataSourceGen {
 
     @Value("\${spring.datasource.url}")
     private var dbUrl: String? = null
-    
+
     @Autowired
     lateinit var dataSource: DataSource
 
     @Bean
     @Throws(SQLException::class)
     fun dataSource(): DataSource {
-        if (dbUrl?.isEmpty() ?: true) {
+        if (dbUrl?.isEmpty() != false) {
             return HikariDataSource()
         } else {
             val config = HikariConfig()

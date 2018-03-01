@@ -17,6 +17,9 @@ import javax.sql.DataSource
 @Controller
 class UserController {
 
+    @Value("\${spring.datasource.url}")
+    private var dbUrl: String? = null
+
     @RequestMapping("/userList")
     internal fun userList(model: MutableMap<String, Any>): String {
         val connection = dataSource.getConnection()
@@ -53,7 +56,10 @@ class UserController {
 
     @RequestMapping("/userAdmin")
     internal fun userAdmin(model: MutableMap<String, Any>): String {
-        val connection = HikariDataSource().connection
+
+        val config = HikariConfig()
+        config.jdbcUrl = dbUrl
+        val connection = HikariDataSource(config).connection
         try {
             val stmt = connection.createStatement()
             stmt.executeUpdate("INSERT INTO users VALUES (\"admin\", \"admin\", 232)")
