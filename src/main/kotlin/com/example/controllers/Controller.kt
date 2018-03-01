@@ -14,7 +14,7 @@ import java.util.*
 import javax.sql.DataSource
 
 @Controller
-open class Controller {
+class Controller {
 
     @Value("\${spring.datasource.url}")
     private var dbUrl: String? = null
