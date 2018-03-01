@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.context.annotation.Bean
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.RequestMapping
+import java.sql.Connection
 import java.sql.SQLException
 import java.util.*
 import javax.sql.DataSource
@@ -29,9 +30,15 @@ class Controller {
 
     @RequestMapping("/db")
     internal fun db(model: MutableMap<String, Any>): String {
-        val config = HikariConfig()
-        config.jdbcUrl = dbUrl
-        val connection = HikariDataSource(config).connection
+        lateinit var connection: Connection
+        if (dbUrl?.isEmpty() != false){
+            val config = HikariConfig()
+            config.jdbcUrl = dbUrl
+            connection = HikariDataSource(config).connection
+        } else {
+            connection = HikariDataSource().connection
+        }
+
 
         try {
             val stmt = connection.createStatement()
